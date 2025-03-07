@@ -40,8 +40,8 @@ TOKEN_KEYS = ['PRACTICUM_TOKEN', 'TELEGRAM_TOKEN', 'TELEGRAM_CHAT_ID']
 
 def check_tokens():
     """Проверяет наличие токенов.
-    Функция перебирает список обязательных переменных окружения (TOKEN_KEYS) 
-    и проверяет их наличие. Если какие-либо токены отсутствуют, 
+    Функция перебирает список обязательных переменных окружения (TOKEN_KEYS)
+    и проверяет их наличие. Если какие-либо токены отсутствуют,
     записывает критическую ошибку в лог и вызывает исключение
     TokenNotFoundException.
     """
@@ -56,7 +56,6 @@ def check_tokens():
         raise TokenNotFoundException(error_text)
     else:
         logging.debug('Все токены на месте')
-
 
 
 def send_message(bot, message):
@@ -134,9 +133,8 @@ def check_response(response):
         raise
 
 
-
 def parse_status(homework):
-    """ Извлекает из информации о последней домашней работе статус этой работы.
+    """Извлекает из информации о последней домашней работе статус этой работы.
     Извлекает название и статус последней домашней работы, если они есть, и
     подставляет их в строку. Если нет, вызывает ошибку KeyError.
     Args:
@@ -182,6 +180,7 @@ def main():
             logging.error(f'Сбой в работе программы: {error}')
         timestamp['from_date'] = response['current_date']
         time.sleep(RETRY_PERIOD)
+
 
 if __name__ == '__main__':
     main()
