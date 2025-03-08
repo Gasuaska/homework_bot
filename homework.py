@@ -27,7 +27,7 @@ HOMEWORK_VERDICTS = {
 }
 stream_handler = logging.StreamHandler(sys.stdout)
 formatter = (logging
-             .Formatter('%(asctime)s, %(levelname)s, %(message)s, %(name)s'))
+             .Formatter('%(asctime)s, %(levelname)s, %(message)s'))
 stream_handler.setFormatter(formatter)
 
 logging.basicConfig(
@@ -35,27 +35,28 @@ logging.basicConfig(
     level=logging.DEBUG,
 )
 
-TOKEN_KEYS = ['PRACTICUM_TOKEN', 'TELEGRAM_TOKEN', 'TELEGRAM_CHAT_ID']
 
 
 def check_tokens():
     """Проверяет наличие токенов.
-    Функция перебирает список обязательных переменных окружения (TOKEN_KEYS)
+    Функция перебирает словарь обязательных переменных окружения (TOKEN_KEYS)
     и проверяет их наличие. Если какие-либо токены отсутствуют,
     записывает критическую ошибку в лог и вызывает исключение
     TokenNotFoundException.
     """
+    TOKEN_KEYS ={'PRACTICUM_TOKEN': PRACTICUM_TOKEN,
+                 'TELEGRAM_TOKEN': TELEGRAM_TOKEN,
+                 'TELEGRAM_CHAT_ID': TELEGRAM_CHAT_ID}
     unavailable_tokens = []
-    for key in TOKEN_KEYS:
-        if os.getenv(key) is None:
-            unavailable_tokens.append(key)
+    for token in TOKEN_KEYS:
+        if TOKEN_KEYS[token] is None:
+            unavailable_tokens.append(token)
     if unavailable_tokens:
-        error_text = (f'Отсутствуют обязательные переменные '
-                      f'{", ".join(unavailable_tokens)}')
-        logging.critical(error_text)
-        raise TokenNotFoundException(error_text)
+        logging.critical(f'Нет токенов {", ".join(unavailable_tokens)}')
+        return False
     else:
         logging.debug('Все токены на месте')
+        return True
 
 
 def send_message(bot, message):
@@ -161,7 +162,9 @@ def parse_status(homework):
 
 def main():
     """Основная логика работы бота."""
-    check_tokens()
+    if not check_tokens():
+        logging.critical('Отсутствует переменная окружения')
+        sys.exit('Программа принудительно остановлена')
     bot = TeleBot(token=TELEGRAM_TOKEN)
     timestamp = {'from_date': int(time.time())}
     while True:
@@ -170,9 +173,6 @@ def main():
             message = check_response(response)
             if response['homeworks']:
                 message = parse_status(response['homeworks'][0])
-                send_message(bot, message)
-            else:
-                message = 'Обновлений по работе нет( проверю через 10 минут'
                 send_message(bot, message)
         except Exception as error:
             message = f'Сбой в работе программы: {error}'
