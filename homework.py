@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from telebot import TeleBot
 from telebot.apihelper import ApiException
 
-from exceptions import APIIsUnavailableException, TokenNotFoundException
+from exceptions import APIIsUnavailableException
 
 load_dotenv()
 
@@ -36,7 +36,6 @@ logging.basicConfig(
 )
 
 
-
 def check_tokens():
     """Проверяет наличие токенов.
     Функция перебирает словарь обязательных переменных окружения (TOKEN_KEYS)
@@ -44,9 +43,9 @@ def check_tokens():
     записывает критическую ошибку в лог и вызывает исключение
     TokenNotFoundException.
     """
-    TOKEN_KEYS ={'PRACTICUM_TOKEN': PRACTICUM_TOKEN,
-                 'TELEGRAM_TOKEN': TELEGRAM_TOKEN,
-                 'TELEGRAM_CHAT_ID': TELEGRAM_CHAT_ID}
+    TOKEN_KEYS = {'PRACTICUM_TOKEN': PRACTICUM_TOKEN,
+                  'TELEGRAM_TOKEN': TELEGRAM_TOKEN,
+                  'TELEGRAM_CHAT_ID': TELEGRAM_CHAT_ID}
     unavailable_tokens = []
     for token in TOKEN_KEYS:
         if TOKEN_KEYS[token] is None:
