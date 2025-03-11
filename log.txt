@@ -77,3 +77,17 @@
 2025-03-11 19:44:08,713, DEBUG, https://practicum.yandex.ru:443 "GET /api/user_api/homework_statuses/?from_date=1741704247 HTTP/1.1" 200 42
 2025-03-11 19:44:08,715, DEBUG, Ответ от API получен успешно
 2025-03-11 19:44:08,717, DEBUG, Ответ API проверен успешно
+2025-03-11 20:17:04,605, DEBUG, Все токены на месте
+2025-03-11 20:17:04,611, DEBUG, Starting new HTTPS connection (1): practicum.yandex.ru:443
+2025-03-11 20:17:08,546, DEBUG, https://practicum.yandex.ru:443 "GET /api/user_api/homework_statuses/?from_date=1741706224 HTTP/1.1" 200 42
+2025-03-11 20:17:08,548, DEBUG, Ответ от API получен успешно
+2025-03-11 20:17:08,550, DEBUG, Ответ API проверен успешно
+2025-03-11 20:27:08,562, DEBUG, Starting new HTTPS connection (1): practicum.yandex.ru:443
+2025-03-11 20:27:09,543, DEBUG, https://practicum.yandex.ru:443 "GET /api/user_api/homework_statuses/?from_date=1741706224 HTTP/1.1" 200 42
+2025-03-11 20:27:09,545, DEBUG, Ответ от API получен успешно
+2025-03-11 20:27:09,548, DEBUG, Ответ API проверен успешно
+2025-03-11 20:55:39,463, DEBUG, Все токены на месте
+2025-03-11 20:55:39,469, DEBUG, Starting new HTTPS connection (1): practicum.yandex.ru:443
+2025-03-11 20:55:40,536, DEBUG, https://practicum.yandex.ru:443 "GET /api/user_api/homework_statuses/?from_date=1741708539 HTTP/1.1" 200 42
+2025-03-11 20:55:40,538, DEBUG, Ответ от API получен успешно
+2025-03-11 20:55:40,539, DEBUG, Ответ API проверен успешно
