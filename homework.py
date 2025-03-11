@@ -139,7 +139,7 @@ def get_api_answer(timestamp):
             break
         raise exceptions.ResponseFormatError(
             API_ERROR.format(key=key,
-                             value=code_error[key]
+                             value=code_error[key],
                              **request_params))
     logging.debug(API_SUCCESS)
     return response_json
