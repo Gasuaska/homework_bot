@@ -180,8 +180,7 @@ def parse_status(homework):
     homework_name = homework['homework_name']
     status = homework.get('status')
     if status not in HOMEWORK_VERDICTS:
-        raise ValueError(UNKNOWN_HOMEWORK_STATUS.
-                       format(status=status))
+        raise ValueError(UNKNOWN_HOMEWORK_STATUS.format(status=status))
     verdict = HOMEWORK_VERDICTS[status]
     logging.debug(HOMEWORK_PROCESSED.format(
         homework_name=homework_name,
