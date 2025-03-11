@@ -44,8 +44,9 @@ def check_tokens():
     if unavailable_tokens:
         logging.critical(strings_rus.TOKENS_UNAVAILABLE.
                          format(unavailable_tokens=unavailable_tokens))
-        raise exceptions.TokenNotFoundError(strings_rus.TOKENS_UNAVAILABLE.
-                                 format(unavailable_tokens=unavailable_tokens))
+        raise exceptions.TokenNotFoundError(
+            strings_rus.TOKENS_UNAVAILABLE.
+            format(unavailable_tokens=unavailable_tokens))
     logging.debug(strings_rus.ALL_TOKENS_AVAILABLE)
 
 
@@ -65,8 +66,9 @@ def send_message(bot, message):
         return True
     except ApiException as error:
         logging.exception(strings_rus.MESSAGE_NOT_SENT.format(error=error,
-                                                  message=message))
+                                                              message=message))
         return False
+
 
 def get_api_answer(timestamp):
     """Получает ответ API.
@@ -83,12 +85,11 @@ def get_api_answer(timestamp):
                                 headers=HEADERS,
                                 params=timestamp)
     except requests.exceptions.RequestException as error:
-        raise exceptions.TelegramConnectionError(strings_rus.CONNECTION_ERROR.format(
-            error=error,
-            url=ENDPOINT,
-            headers=HEADERS,
-            params=timestamp,
-        ))
+        raise exceptions.TelegramConnectionError(strings_rus.CONNECTION_ERROR.
+                                                 format(error=error,
+                                                        url=ENDPOINT,
+                                                        headers=HEADERS,
+                                                        params=timestamp))
     if response.status_code != HTTPStatus.OK:
         raise exceptions.APIIsUnavailableError(strings_rus.
                                                API_IS_UNAVAILABLE.format(
@@ -101,7 +102,7 @@ def get_api_answer(timestamp):
         response_json = response.json()
         if any(key in response_json for key in ('code', 'error')):
             raise exceptions.ResponseFormatError(strings_rus.API_ERROR.
-                                        format(error=response_json))
+                                                 format(error=response_json))
         logging.debug(strings_rus.API_SUCCESS)
         return response_json
     except Exception as error:
@@ -157,7 +158,7 @@ def parse_status(homework):
         homework_name=homework_name,
         verdict=verdict))
     return strings_rus.HOMEWORK_VERDICT.format(homework_name=homework_name,
-                                   verdict=verdict)
+                                               verdict=verdict)
 
 
 def main():
@@ -171,7 +172,7 @@ def main():
             message = check_response(response)
             if response['homeworks']:
                 message = parse_status(response['homeworks'][0])
-                if not send_message(bot, message):  
+                if not send_message(bot, message):
                     logging.error(strings_rus.TELEGRAM_MESSAGE_NOT_SUCCESSFUL.
                                   format(message=message))
                 timestamp['from_date'] = response.get('current_date',
