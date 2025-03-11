@@ -33,7 +33,7 @@ TOKENS_UNAVAILABLE_EXCEPTION = 'Один или несколько токено�
 ALL_TOKENS_AVAILABLE = 'Все токены на месте.'
 MESSAGE_SENT_SUCCESSULLY = 'Сообщение успешно отправлено: {message}.'
 MESSAGE_NOT_SENT = ('Ошибка при отправке сообщения: {error}.'
-                      'Текст сообщения: {message}.')
+                    'Текст сообщения: {message}.')
 API_IS_UNAVAILABLE = ('API недоступен. Код ответа {status_code}, '
                       'ENDPOINT: {endpoint}, '
                       'ENDPOINT: {headers}, '
@@ -44,11 +44,11 @@ RESPONSE_TYPE_CHECK = ('Ответ API должен быть словарем, '
                        'а получен {response_type}.')
 NO_HOMEWORK_IN_RESPONSE = 'В ответе API отсутствует ключ "homeworks".'
 RESPONSE_HOMEWORKS_TYPE_CHECK = ('Внутри homeworks должен быть список, '
-                            'а получен {homework_type}.')
+                                 'а получен {homework_type}.')
 HOMEWORK_WRONG_TYPE = ('Элементы "homeworks" должны быть словарями,'
                        'а получены {homework_type}.')
 RESPONSE_SUCCESS = 'Ответ API проверен успешно.'
-NO_HOMEWORK_NAME_IN_HOMEWORKS ='Ответ API не содержит ключ "homework_name"'
+NO_HOMEWORK_NAME_IN_HOMEWORKS = 'Ответ API не содержит ключ "homework_name"'
 NO_HOMEWORK_NAME_KEY = 'В ответе API у "homework_name" отсутствует ключ.'
 UNKNOWN_HOMEWORK_STATUS = 'Неизвестный статус "{status}" в ответе API.'
 HOMEWORK_PROCESSED = 'Статус работы "{homework_name}" обработан: {verdict}'
@@ -125,29 +125,24 @@ def get_api_answer(timestamp):
                 error=error,
                 url=ENDPOINT,
                 headers=HEADERS,
-                params=timestamp
-                )
-            )
+                params=timestamp))
     if response.status_code != HTTPStatus.OK:
         raise exceptions.APIIsUnavailableError(API_IS_UNAVAILABLE.format(
             status_code=response.status_code,
             endpoint=ENDPOINT,
             headers=HEADERS,
-            params=timestamp
-            )
-        )
+            params=timestamp))
     response_json = response.json()
     if any(key in response_json for key in ('code', 'error')):
+        key = next(key for key in ('code', 'error') if key in response_json)
         code_error = {key: response_json[key]}
-        logging.error(strings_rus.API_ERROR.format(
+        logging.error(API_ERROR.format(
             error=code_error,
             url=ENDPOINT,
             headers=HEADERS,
-            params=timestamp,
-            ))
+            params=timestamp,))
         raise exceptions.ResponseFormatError(
-            API_ERROR.format(error=response_json['error'])
-            )
+            API_ERROR.format(error=response_json['error']))
     logging.debug(API_SUCCESS)
     return response_json
 
@@ -162,9 +157,7 @@ def check_response(response):
     """
     if not isinstance(response, dict):
         raise TypeError(RESPONSE_TYPE_CHECK.format(
-            response_type=type(response)
-            )
-        )
+            response_type=type(response)))
     if 'homeworks' not in response:
         raise KeyError(NO_HOMEWORK_IN_RESPONSE)
     if not isinstance(response['homeworks'], list):
@@ -188,18 +181,14 @@ def parse_status(homework):
     status = homework.get('status')
     if status not in HOMEWORK_VERDICTS:
         raise ValueError(UNKNOWN_HOMEWORK_STATUS.
-                       format(status=status)
-                       )
+                       format(status=status))
     verdict = HOMEWORK_VERDICTS[status]
     logging.debug(HOMEWORK_PROCESSED.format(
         homework_name=homework_name,
-        verdict=verdict
-        )
-    )
+        verdict=verdict))
     return HOMEWORK_VERDICT.format(
         homework_name=homework_name,
-        verdict=verdict
-        )
+        verdict=verdict)
 
 
 def main():
