@@ -158,9 +158,10 @@ def check_response(response):
             response_type=type(response)))
     if 'homeworks' not in response:
         raise KeyError(NO_HOMEWORK_IN_RESPONSE)
-    if not isinstance(response['homeworks'], list):
+    homework = response['homeworks']
+    if not isinstance(homework, list):
         raise TypeError(RESPONSE_HOMEWORKS_TYPE_CHECK.format(
-            homework_type=type(response['homeworks'])))
+            homework_type=type(homework)))
     logging.debug(RESPONSE_SUCCESS)
 
 
