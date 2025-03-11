@@ -8,10 +8,3 @@ class TelegramConnectionError(Exception):
 
 class TokenNotFoundError(Exception):
     pass
-
-class ApiError(Exception):
-    pass
-
-
-class MessageError(Exception):
-    pass
