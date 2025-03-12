@@ -35,7 +35,7 @@ MESSAGE_SENT_SUCCESSULLY = 'Сообщение успешно отправлен
 MESSAGE_NOT_SENT = ('Ошибка при отправке сообщения: {error}.'
                     'Текст сообщения: {message}.')
 REQUEST_PARAMS = 'ENDPOINT: {url}, headers: {headers}, params: {params}.'
-API_IS_UNAVAILABLE = ('API недоступен. Код ответа {status_code}, ' 
+API_IS_UNAVAILABLE = ('API недоступен. Код ответа {status_code}, '
                       + REQUEST_PARAMS)
 API_ERROR = ('API вернул ошибку: {key}: {value}. ' + REQUEST_PARAMS)
 API_SUCCESS = 'Ответ от API получен успешно.'
@@ -56,11 +56,11 @@ HOMEWORK_VERDICT = ('Изменился статус проверки работ
 MISSING_ENVIRONMENT_VARIABLE = 'Отсутствует переменная окружения.'
 PROGRAM_STOPPED = 'Программа принудительно остановлена.'
 ERROR_MESSAGE = 'Сбой в работе программы: {error}.'
-CONNECTION_ERROR = 'Ошибка соединения. '+ REQUEST_PARAMS
+CONNECTION_ERROR = 'Ошибка соединения. ' + REQUEST_PARAMS
 RESPONSE_NOT_JSON = 'Ошибка, ответ не в формате json, {error}.'
 TELEGRAM_MESSAGE_NOT_SUCCESSFUL = ('Не удалось отправить сообщение в Telegram,'
                                    ' сообщение: {message}.')
-NO_NEW_HOMEWORKS = ('Обновлений по домашним работам нет. ' 
+NO_NEW_HOMEWORKS = ('Обновлений по домашним работам нет. '
                     f'Жду {RETRY_PERIOD / 60} минут.')
 MESSAGE_SUCCESSFULY_SENT = 'Сообщение успешно отправлено.'
 
