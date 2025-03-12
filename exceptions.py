@@ -8,3 +8,6 @@ class TelegramConnectionError(Exception):
 
 class TokenNotFoundError(Exception):
     pass
+
+class ResponseFormatError(Exception):
+    pass

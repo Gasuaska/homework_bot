@@ -135,12 +135,11 @@ def get_api_answer(timestamp):
     response_json = response.json()
     for key in ('code', 'error'):
         if key in response_json:
-            code_error = {key: response_json[key]}
-            break
-        raise exceptions.ResponseFormatError(
-            API_ERROR.format(key=key,
-                             value=code_error[key],
-                             **request_params))
+            raise exceptions.ResponseFormatError(
+                API_ERROR.format(
+                    key=key,
+                    value=response_json[key],
+                    **request_params))
     logging.debug(API_SUCCESS)
     return response_json
 
