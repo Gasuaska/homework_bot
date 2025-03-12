@@ -34,14 +34,10 @@ ALL_TOKENS_AVAILABLE = 'Все токены на месте.'
 MESSAGE_SENT_SUCCESSULLY = 'Сообщение успешно отправлено: {message}.'
 MESSAGE_NOT_SENT = ('Ошибка при отправке сообщения: {error}.'
                     'Текст сообщения: {message}.')
-API_IS_UNAVAILABLE = ('API недоступен. Код ответа {status_code}, '
-                      'ENDPOINT: {endpoint}, '
-                      'ENDPOINT: {headers}, '
-                      'params: {params}.')
-API_ERROR = ('API вернул ошибку: {key}: {value}. '
-             'ENDPOINT: {endpoint}, '
-             'ENDPOINT: {headers}, '
-             'params: {params}.')
+REQUEST_PARAMS = 'ENDPOINT: {url}, headers: {headers}, params: {params}.'
+API_IS_UNAVAILABLE = ('API недоступен. Код ответа {status_code}, ' 
+                      + REQUEST_PARAMS)
+API_ERROR = ('API вернул ошибку: {key}: {value}. ' + REQUEST_PARAMS)
 API_SUCCESS = 'Ответ от API получен успешно.'
 RESPONSE_TYPE_CHECK = ('Ответ API должен быть словарем, '
                        'а получен {response_type}.')
@@ -60,14 +56,12 @@ HOMEWORK_VERDICT = ('Изменился статус проверки работ
 MISSING_ENVIRONMENT_VARIABLE = 'Отсутствует переменная окружения.'
 PROGRAM_STOPPED = 'Программа принудительно остановлена.'
 ERROR_MESSAGE = 'Сбой в работе программы: {error}.'
-CONNECTION_ERROR = ('Ошибка соединения. '
-                    'ENDPOINT: {endpoint}, '
-                    'ENDPOINT: {headers}, '
-                    'params: {params}.')
+CONNECTION_ERROR = 'Ошибка соединения. '+ REQUEST_PARAMS
 RESPONSE_NOT_JSON = 'Ошибка, ответ не в формате json, {error}.'
 TELEGRAM_MESSAGE_NOT_SUCCESSFUL = ('Не удалось отправить сообщение в Telegram,'
                                    ' сообщение: {message}.')
-NO_NEW_HOMEWORKS = 'Обновлений по домашним работам нет. Жду {period} минут.'
+NO_NEW_HOMEWORKS = ('Обновлений по домашним работам нет. ' 
+                    f'Жду {RETRY_PERIOD / 60} минут.')
 MESSAGE_SUCCESSFULY_SENT = 'Сообщение успешно отправлено.'
 
 TOKEN_NAMES = {'PRACTICUM_TOKEN', 'TELEGRAM_TOKEN', 'TELEGRAM_CHAT_ID'}
@@ -146,9 +140,8 @@ def get_api_answer(timestamp):
 
 def check_response(response):
     """Проверяет ответ API на соответствие документации.
-    Проверяет тип полученного ответа (должен быть словарь), вложенные в словарь
-    response список homeworks и целочисленную переменную current_date и
-    элементы списка homeworks, являющиеся словарями.
+    Проверяет тип полученного ответа (должен быть словарь) и вложенный в
+    словарь response список homeworks.
     Args:
         response (dict): ответ API;
     """
@@ -204,8 +197,7 @@ def main():
                 continue
             message = parse_status(homework[0])
             if send_message(bot, message):
-                logging.debug(MESSAGE_SUCCESSFULY_SENT.
-                              format(period=RETRY_PERIOD / 60))
+                logging.debug(MESSAGE_SUCCESSFULY_SENT)
                 timestamp = response.get('current_date', timestamp)
         except Exception as error:
             message = ERROR_MESSAGE.format(error=error)
