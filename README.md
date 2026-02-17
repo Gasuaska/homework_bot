@@ -11,7 +11,7 @@ git clone https://github.com/Gasuaska/homework_bot.git
 
 3. Запустите программу:
 ```bash
-python manage.py runserver
+python homework.py
 ```
 
 Для остановки программы нажмите в терминале Ctrl + C.
